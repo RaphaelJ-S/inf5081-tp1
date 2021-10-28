@@ -1,18 +1,33 @@
 import jupyter
-import matplotlib
+import matplotlib.pyplot as plt
 import numpy
 import pandas as pd
 import scipy
-import sklearn
-from classes.reader import Reader
-from classes.data_parser import Data_Parser
+import graphviz
+from sklearn import tree
+from sklearn.datasets import load_iris
+from classes.data import Data
+
+
+def load_data(file):
+    data = []
+    with open(file) as f:
+        for line in f:
+            data.append(line.strip("\n").split(","))
+    return data
+
+
+def decision_tree(data, classLabel):
+    arbre = tree.DecisionTreeClassifier()
+    return arbre.fit(data, classLabel)
 
 
 def main():
-    reader = Reader(Data_Parser())
-    data = reader.read_data("../glass.data")
-    df = pd.DataFrame(data=data).T
-    print(df)
+    data = Data(load_data("glass.data"))
+    X, y = data.sliceLabel()
+    arbre = decision_tree(X, y)
+    tree.plot_tree(arbre)
+    plt.show()
 
 
 if __name__ == "__main__":
