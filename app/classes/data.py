@@ -1,3 +1,5 @@
+from pandas.core.frame import DataFrame
+import pandas as pd
 from sklearn.model_selection import train_test_split
 
 
@@ -39,6 +41,11 @@ class Data:
             data.append(self.sliced_dataset(dataset))
             label.append(dataset["Type of glass"])
         return [data, label]
+
+    def toDataFrame(self) -> DataFrame:
+        for dataset in self.data:
+            dataset.pop("Id")
+        return DataFrame.from_dict(self.data)
 
     def sliced_dataset(self, dataset: dict):
         sliced_data = []

@@ -3,9 +3,7 @@ import matplotlib.pyplot as plt
 import numpy
 import pandas as pd
 import scipy
-import graphviz
 from sklearn import tree
-from sklearn.datasets import load_iris
 from classes.data import Data
 
 
@@ -24,9 +22,10 @@ def decision_tree(data, classLabel):
 
 def main():
     data = Data(load_data("glass.data"))
-    X, y = data.sliceLabel()
-    arbre = decision_tree(X, y)
-    tree.plot_tree(arbre)
+    frame = data.toDataFrame()
+    frame.hist(bins=50, figsize=(20, 15))
+    plt.show()
+    frame[frame["Type of glass"] == 1].hist(bins=50, figsize=(20, 15))
     plt.show()
 
 
