@@ -1,13 +1,15 @@
+import numpy
 from pandas.core.frame import DataFrame
 import pandas as pd
 from sklearn.model_selection import train_test_split
+from sklearn import tree, preprocessing
 
 
 class Data:
 
     def __init__(self, raw: list[list[str]]):
         self.raw = raw
-        self.data = self.cleanup(raw)
+        self.data_frame = self.toDataFrame(self.cleanup(raw))
 
     def cleanup(self, raw) -> list[dict]:
         clean = []
@@ -28,52 +30,40 @@ class Data:
         return clean
 
     def removeColumn(self, label: str):
-        for set in self.data:
-            set.pop(label)
+        self.data_frame.drop(label, axis=1, inplace=True)
 
-    def splitData(self, offset: float) -> list[list[dict]]:
-        return train_test_split(self.data, test_size=offset, random_state=42)
+    def splitNormalizedData(self, offset: float):
+        return train_test_split(self.getNormalizedData(), self.data_frame["Type of glass"], test_size=offset, random_state=42)
 
-    def sliceLabel(self):
-        label = []
-        data = []
-        for dataset in self.data:
-            data.append(self.sliced_dataset(dataset))
-            label.append(dataset["Type of glass"])
-        return [data, label]
+    def splitData(self, offset: float):
+        return train_test_split(self.data_frame[self.getFeatures()], self.data_frame["Type of glass"], test_size=offset, random_state=42)
 
-    def toDataFrame(self) -> DataFrame:
-        for dataset in self.data:
+    def getFeatures(self):
+        features = list(self.data_frame.keys())
+        if features.count("Type of glass") != 0:
+            features.pop()
+        if features.count("Id") != 0:
+            features.pop(0)
+        return features
+
+    def getClassData(self, typeOfGlass: int):
+        return self.data_frame[self.data_frame["Type of glass"] == typeOfGlass]
+
+    def getNormalizedData(self) -> numpy.array:
+        features = self.data_frame[self.getFeatures()]
+        std_scale = preprocessing.StandardScaler().fit(features)
+        return std_scale.transform(features)
+
+    def toDataFrame(self, data: list[dict]) -> DataFrame:
+        for dataset in data:
             dataset.pop("Id")
-        return DataFrame.from_dict(self.data)
-
-    def sliced_dataset(self, dataset: dict):
-        sliced_data = []
-        if not (dataset.get("RI") is None):
-            sliced_data.append(dataset["RI"])
-        if not (dataset.get("Na") is None):
-            sliced_data.append(dataset["Na"])
-        if not (dataset.get("Mg") is None):
-            sliced_data.append(dataset["Mg"])
-        if not (dataset.get("Al") is None):
-            sliced_data.append(dataset["Al"])
-        if not (dataset.get("Si") is None):
-            sliced_data.append(dataset["Si"])
-        if not (dataset.get("K") is None):
-            sliced_data.append(dataset["K"])
-        if not (dataset.get("Ca") is None):
-            sliced_data.append(dataset["Ca"])
-        if not (dataset.get("Ba") is None):
-            sliced_data.append(dataset["Ba"])
-        if not (dataset.get("Fe") is None):
-            sliced_data.append(dataset["Fe"])
-        return sliced_data
+        return DataFrame.from_dict(data)
 
     def resetData(self):
-        self.data = self.cleanup(self.raw)
+        self.data_frame = self.toDataFrame(self.cleanup(self.raw))
 
     def __str__(self):
         string = ""
-        for set in self.data:
+        for set in self.data_frame:
             string += str(set) + '\n'
         return string
