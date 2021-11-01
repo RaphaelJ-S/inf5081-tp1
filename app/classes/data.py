@@ -33,10 +33,10 @@ class Data:
         self.data_frame.drop(label, axis=1, inplace=True)
 
     def splitNormalizedData(self, offset: float):
-        return train_test_split(self.getNormalizedData(), self.data_frame["Type of glass"], test_size=offset, random_state=42)
+        return train_test_split(self.getNormalizedData(), self.data_frame["Type of glass"], test_size=offset)
 
     def splitData(self, offset: float):
-        return train_test_split(self.data_frame[self.getFeatures()], self.data_frame["Type of glass"], test_size=offset, random_state=42)
+        return train_test_split(self.data_frame[self.getFeatures()], self.data_frame["Type of glass"], test_size=offset)
 
     def getFeatures(self):
         features = list(self.data_frame.keys())
