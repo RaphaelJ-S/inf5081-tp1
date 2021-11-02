@@ -7,11 +7,11 @@ from sklearn import tree, preprocessing
 
 class Data:
 
-    def __init__(self, raw: list[list[str]]):
+    def __init__(self, raw: "list[list[str]]"):
         self.raw = raw
         self.data_frame = self.toDataFrame(self.cleanup(raw))
 
-    def cleanup(self, raw) -> list[dict]:
+    def cleanup(self, raw : "list[list[str]]") -> "list[dict]":
         clean = []
         for list in raw:
             clean.append({
@@ -54,7 +54,7 @@ class Data:
         std_scale = preprocessing.StandardScaler().fit(features)
         return std_scale.transform(features)
 
-    def toDataFrame(self, data: list[dict]) -> DataFrame:
+    def toDataFrame(self, data: "list[dict]") -> DataFrame:
         for dataset in data:
             dataset.pop("Id")
         return DataFrame.from_dict(data)
