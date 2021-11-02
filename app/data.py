@@ -1,6 +1,5 @@
 import numpy
 from pandas.core.frame import DataFrame
-import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn import tree, preprocessing
 
@@ -11,7 +10,7 @@ class Data:
         self.raw = raw
         self.data_frame = self.toDataFrame(self.cleanup(raw))
 
-    def cleanup(self, raw : "list[list[str]]") -> "list[dict]":
+    def cleanup(self, raw: "list[list[str]]") -> "list[dict]":
         clean = []
         for list in raw:
             clean.append({
@@ -63,7 +62,4 @@ class Data:
         self.data_frame = self.toDataFrame(self.cleanup(self.raw))
 
     def __str__(self):
-        string = ""
-        for set in self.data_frame:
-            string += str(set) + '\n'
-        return string
+        return str(self.data_frame)
