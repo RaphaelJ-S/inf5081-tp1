@@ -1,0 +1,67 @@
+rien : 
+
+	Moyenne Arbre : 0.680698
+	Moyenne Forest : 0.781860
+	Moyenne Bayes : 0.455814
+	Moyenne Knn : 0.699070
+
+RI :
+	Moyenne Arbre : 0.624186
+	Moyenne Forest : 0.731163
+	Moyenne Bayes : 0.471395
+	Moyenne Knn : 0.644419
+
+Na :
+	Moyenne Arbre : 0.686047
+	Moyenne Forest : 0.778372
+	Moyenne Bayes : 0.432558
+	Moyenne Knn : 0.685116
+
+Mg :
+	Moyenne Arbre : 0.650465
+	Moyenne Forest : 0.744651
+	Moyenne Bayes : 0.423256
+	Moyenne Knn : 0.684651
+	
+Al :
+	Moyenne Arbre : 0.683488
+	Moyenne Forest : 0.772326
+	Moyenne Bayes : 0.446744
+	Moyenne Knn : 0.672093
+	
+Si :
+	Moyenne Arbre : 0.673488
+	Moyenne Forest : 0.771628
+	Moyenne Bayes : 0.441628
+	Moyenne Knn : 0.668605
+
+K :
+	Moyenne Arbre : 0.673721
+	Moyenne Forest : 0.778605
+	Moyenne Bayes : 0.272558
+	Moyenne Knn : 0.680233
+
+Ca :
+	Moyenne Arbre : 0.666279
+	Moyenne Forest : 0.767674
+	Moyenne Bayes : 0.450465
+	Moyenne Knn : 0.676512
+	
+Ba : 
+	Moyenne Arbre : 0.671163
+	Moyenne Forest : 0.767907
+	Moyenne Bayes : 0.430000
+	Moyenne Knn : 0.704651
+
+Fe : 
+	Moyenne Arbre : 0.687907
+	Moyenne Forest : 0.769767
+	Moyenne Bayes : 0.441395
+	Moyenne Knn : 0.733023
+	
+	
+Fe, Ba :
+	Moyenne Arbre : 0.677209
+	Moyenne Forest : 0.766047
+	Moyenne Bayes : 0.437209
+	Moyenne Knn : 0.739302
