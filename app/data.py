@@ -2,6 +2,7 @@ import numpy
 from pandas.core.frame import DataFrame
 from sklearn.model_selection import train_test_split
 from sklearn import tree, preprocessing
+from sklearn.preprocessing import label_binarize
 
 
 class Data:
@@ -31,11 +32,13 @@ class Data:
     def removeColumn(self, label: str):
         self.data_frame.drop(label, axis=1, inplace=True)
 
-    def splitNormalizedData(self, offset: float):
-        return train_test_split(self.getNormalizedData(), self.data_frame["Type of glass"], test_size=offset)
-
     def splitData(self, offset: float):
-        return train_test_split(self.data_frame[self.getFeatures()], self.data_frame["Type of glass"], test_size=offset)
+        return train_test_split(self.data_frame[self.getFeatures()], self.data_frame["Type of glass"], test_size=offset, random_state=42)
+
+    def splitBinarizedData(self, offset: float):
+        y = label_binarize(self.data_frame["Type of glass"], classes=[
+                           1, 2, 3, 5, 6, 7])
+        return train_test_split(self.data_frame[self.getFeatures()], y, test_size=offset, random_state=42)
 
     def getFeatures(self):
         features = list(self.data_frame.keys())
