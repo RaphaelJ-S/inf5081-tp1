@@ -1,8 +1,11 @@
-import numpy
+import numpy as np
 from pandas.core.frame import DataFrame
+import pandas as pd
+from pandas import IntervalIndex
+from scipy import stats
 from sklearn.model_selection import train_test_split
 from sklearn import tree, preprocessing
-from sklearn.preprocessing import label_binarize
+from sklearn.preprocessing import label_binarize, KBinsDiscretizer
 
 
 class Data:
@@ -40,6 +43,22 @@ class Data:
                            1, 2, 3, 5, 6, 7])
         return train_test_split(self.data_frame[self.getFeatures()], y, test_size=offset, random_state=42)
 
+    def discretizeManual(self, identifier: str,  bounds: list[float]):
+
+        self.data_frame[identifier].update(pd.cut(x=self.data_frame[identifier],
+                                                  bins=bounds,
+                                                  labels=range(
+                                                      len(bounds) - 1),
+                                                  ordered=False))
+
+    def discretizeAuto(self, identifier: str, nb_quantiles: int):
+        self.data_frame[identifier].update(pd.qcut(
+            self.data_frame[identifier], nb_quantiles, labels=range(nb_quantiles)))
+
+    def removeOutliers(self):
+        self.data_frame = self.data_frame[(
+            np.abs(stats.zscore(self.data_frame)) < 3).all(axis=1)]
+
     def getFeatures(self):
         features = list(self.data_frame.keys())
         if features.count("Type of glass") != 0:
@@ -51,7 +70,7 @@ class Data:
     def getClassData(self, typeOfGlass: int):
         return self.data_frame[self.data_frame["Type of glass"] == typeOfGlass]
 
-    def getNormalizedData(self) -> numpy.array:
+    def getNormalizedData(self) -> np.array:
         features = self.data_frame[self.getFeatures()]
         std_scale = preprocessing.StandardScaler().fit(features)
         return std_scale.transform(features)
