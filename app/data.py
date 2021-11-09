@@ -43,7 +43,7 @@ class Data:
                            1, 2, 3, 5, 6, 7])
         return train_test_split(self.data_frame[self.getFeatures()], y, test_size=offset, random_state=42)
 
-    def discretizeManual(self, identifier: str,  bounds: list[float]):
+    def discretizeManual(self, identifier: str,  bounds: "list[float]"):
 
         self.data_frame[identifier].update(pd.cut(x=self.data_frame[identifier],
                                                   bins=bounds,
