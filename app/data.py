@@ -49,6 +49,7 @@ class Data:
                                                   bins=bounds,
                                                   labels=range(
                                                       len(bounds) - 1),
+                                                  include_lowest=True,
                                                   ordered=False))
 
     def discretizeAuto(self, identifier: str, nb_quantiles: int):
